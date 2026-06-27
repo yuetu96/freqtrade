@@ -187,7 +187,7 @@ with open(config_path) as f:
 args = {
     "config": [str(config_path)],
     "strategy": "MultiTimeframeSuperTrendStrategy",
-    "timeframe": "1m",
+    "timeframe": "5m",
     "timerange": "20260531-20260627",
     "datadir": "user_data/data/binance",
     "user_data_dir": "user_data",
