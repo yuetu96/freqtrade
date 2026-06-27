@@ -1,16 +1,29 @@
 """
-离线回测脚本 - 绕过交易所连接
+离线回测脚本 - 完全绕过交易所连接
+通过 monkey-patch 跳过市场数据加载
 """
 import sys
 from pathlib import Path
+import json
 
 # 添加工作目录
 sys.path.insert(0, str(Path(__file__).parent))
 
+# Monkey-patch: 在导入 freqtrade 模块之前禁用市场加载
+from freqtrade.exchange import exchange
+original_reload_markets = exchange.Exchange.reload_markets
+
+def fake_reload_markets(self, *args, **kwargs):
+    """伪造的市场数据加载 - 直接返回"""
+    print("跳过市场数据加载 (离线模式)")
+    return None
+
+exchange.Exchange.reload_markets = fake_reload_markets
+
+# 继续导入其他模块
 from freqtrade.optimize.backtesting import Backtesting
 from freqtrade.configuration import Configuration
 from freqtrade.enums import RunMode
-import json
 
 # 加载配置
 config_path = Path("user_data/config_backtest_offline.json")
