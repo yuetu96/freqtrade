@@ -8,30 +8,34 @@ import json
 sys.path.insert(0, str(Path(__file__).parent))
 
 # ========== 预定义市场数据 ==========
-MOCK_MARKETS = {
-    "AGLD/USDT": {
-        "id": "AGLDUSDT",
-        "symbol": "AGLD/USDT",
-        "base": "AGLD",
-        "quote": "USDT",
-        "baseId": "AGLD",
-        "quoteId": "USDT",
+def _make_market(symbol, base, quote="USDT"):
+    return {
+        "id": symbol,
+        "symbol": f"{base}/{quote}",
+        "base": base,
+        "quote": quote,
+        "baseId": base,
+        "quoteId": quote,
         "active": True,
         "type": "spot",
         "spot": True,
         "taker": 0.001,
         "maker": 0.001,
-        "precision": {
-            "amount": 2,
-            "price": 6,
-        },
+        "precision": {"amount": 2, "price": 6},
         "limits": {
             "amount": {"min": 0.01, "max": 90000000},
             "price": {"min": 0.000001, "max": 1000},
             "cost": {"min": 1, "max": None},
         },
         "info": {},
-    },
+    }
+
+
+MOCK_MARKETS = {
+    "AGLD/USDT": _make_market("AGLDUSDT", "AGLD"),
+    "VELVET/USDT": _make_market("VELVETUSDT", "VELVET"),
+    "LAB/USDT": _make_market("LABUSDT", "LAB"),
+    "MYX/USDT": _make_market("MYXUSDT", "MYX"),
 }
 
 MOCK_TIMEFRAMES = {
@@ -188,7 +192,7 @@ args = {
     "config": [str(config_path)],
     "strategy": "MultiTimeframeSuperTrendStrategy",
     "timeframe": "5m",
-    "timerange": "20260531-20260627",
+    "timerange": "20260529-20260627",
     "datadir": "user_data/data/binance",
     "user_data_dir": "user_data",
 }
