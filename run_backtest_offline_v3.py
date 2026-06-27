@@ -188,7 +188,7 @@ args = {
     "config": [str(config_path)],
     "strategy": "MultiTimeframeSuperTrendStrategy",
     "timeframe": "1m",
-    "timerange": "20260501-20260531",
+    "timerange": "20260531-20260627",
     "datadir": "user_data/data/binance",
     "user_data_dir": "user_data",
 }
